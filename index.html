@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="indigo">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Student OS • Personal Productivity Dashboard</title>
+  <meta name="description" content="A modern, visually polished personal productivity dashboard for students. Organize studying, tasks, notes, Pomodoro focus sessions, and track daily goals." />
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/views.css" />
+</head>
+<body>
+
+  <!-- App Main Layout Container -->
+  <div class="app-container">
+    
+    <!-- Sidebar Overlay for Mobile -->
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="window.app.closeMobileSidebar()"></div>
+
+    <!-- DESKTOP / TABLET SIDEBAR -->
+    <aside id="sidebar" class="sidebar">
+      <!-- Sidebar Brand Header -->
+      <div class="sidebar-header">
+        <a href="#" class="brand" onclick="window.app.navigate('dashboard'); return false;">
+          <div class="brand-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">NEXUS</span>
+            <span class="brand-subtitle">STUDENT OS</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Workspace</div>
+
+        <a href="#dashboard" class="nav-item active" data-view="dashboard" id="nav-dashboard">
+          <div class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          </div>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#tasks" class="nav-item" data-view="tasks" id="nav-tasks">
+          <div class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <span>Tasks & Labs</span>
+          <span class="nav-item-badge" id="nav-badge-tasks">3</span>
+        </a>
+
+        <a href="#timer" class="nav-item" data-view="timer" id="nav-timer">
+          <div class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <span>Focus Timer</span>
+        </a>
+
+        <a href="#progress" class="nav-item" data-view="progress" id="nav-progress">
+          <div class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <span>Analytics & XP</span>
+        </a>
+
+        <a href="#notes" class="nav-item" data-view="notes" id="nav-notes">
+          <div class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <span>Study Notes</span>
+          <span class="nav-item-badge" id="nav-badge-notes">3</span>
+        </a>
+
+        <div class="nav-section-title" style="margin-top: var(--space-4);">System</div>
+
+        <a href="#settings" class="nav-item" data-view="settings" id="nav-settings">
+          <div class="nav-item-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar User Profile Footer -->
+      <div class="sidebar-footer">
+        <div class="user-profile-card">
+          <div class="user-avatar" id="sidebar-user-avatar">AV</div>
+          <div class="user-info">
+            <div class="user-name" id="sidebar-user-name">Alex Vance</div>
+            <div class="user-level" id="sidebar-user-level">Level 4 • 6d Streak 🔥</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT VIEW WRAPPER -->
+    <main class="main-content">
+      
+      <!-- Topbar Header -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn menu-toggle-btn" onclick="window.app.toggleMobileSidebar()" aria-label="Toggle navigation menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+
+          <div class="page-title-group">
+            <h1 class="page-title" id="topbar-page-title">Personal Dashboard</h1>
+            <span class="page-breadcrumb" id="topbar-page-breadcrumb">Nexus OS • Command Center</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="topbar-date-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="topbar-date-text">Academic Semester 2026</span>
+          </div>
+
+          <div class="topbar-actions">
+            <!-- Theme Toggle Button -->
+            <button class="icon-btn" onclick="window.app.toggleTheme()" title="Toggle Theme (Dark / Light / OLED)" id="theme-toggle-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+
+            <!-- Quick Add Task Shortcut Button -->
+            <button class="icon-btn primary" onclick="window.app.openModal('modal-add-task')" title="Quick Add Task (Ctrl/Cmd + K)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="views-wrapper">
+        <section id="view-dashboard" class="view-section active"></section>
+        <section id="view-tasks" class="view-section"></section>
+        <section id="view-timer" class="view-section"></section>
+        <section id="view-progress" class="view-section"></section>
+        <section id="view-notes" class="view-section"></section>
+        <section id="view-settings" class="view-section"></section>
+      </div>
+
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="mobile-bottom-nav">
+      <a href="#dashboard" class="mobile-nav-item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="#tasks" class="mobile-nav-item" data-view="tasks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span>Tasks</span>
+      </a>
+      <a href="#timer" class="mobile-nav-item" data-view="timer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Timer</span>
+      </a>
+      <a href="#progress" class="mobile-nav-item" data-view="progress">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Stats</span>
+      </a>
+      <a href="#notes" class="mobile-nav-item" data-view="notes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span>Notes</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- ==========================================================================
+       MODAL DIALOGS
+       ========================================================================== -->
+
+  <!-- MODAL: ADD TASK -->
+  <div id="modal-add-task" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Task</h3>
+        <button class="btn btn-ghost btn-sm" onclick="window.app.closeModal('modal-add-task')">✕</button>
+      </div>
+
+      <form id="form-add-task">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Task Title</label>
+            <input type="text" name="title" class="input-field" placeholder="e.g. Distributed Systems Lab 4" required/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Description / Instructions</label>
+            <textarea name="desc" class="textarea-field" placeholder="Details, requirements, formulas or links..."></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <select name="subject" class="select-field">
+                <option value="cs">Computer Science</option>
+                <option value="math">Mathematics</option>
+                <option value="bio">Biology</option>
+                <option value="phys">Physics</option>
+                <option value="lit">Literature</option>
+                <option value="other">General / Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Priority</label>
+              <select name="priority" class="select-field">
+                <option value="high">High (Urgent)</option>
+                <option value="med" selected>Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Due Date</label>
+              <input type="date" name="dueDate" class="input-field"/>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Est. Time (Min)</label>
+              <input type="number" name="estimatedMinutes" min="5" step="5" value="45" class="input-field"/>
+            </div>
+          </div>
+
+          <!-- Dynamic Subtasks Builder -->
+          <div class="form-group" style="margin-top: var(--space-2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label class="form-label" style="margin: 0;">Subtasks / Milestones</label>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="window.app.addNewSubtaskRow()" style="font-size: 0.75rem; color: var(--accent-primary);">+ Add Subtask</button>
+            </div>
+            <div id="new-subtasks-list"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="window.app.closeModal('modal-add-task')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT TASK -->
+  <div id="modal-edit-task" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Task</h3>
+        <button class="btn btn-ghost btn-sm" onclick="window.app.closeModal('modal-edit-task')">✕</button>
+      </div>
+
+      <form id="form-edit-task">
+        <input type="hidden" id="edit-task-id" />
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Task Title</label>
+            <input type="text" id="edit-task-title" class="input-field" required/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea id="edit-task-desc" class="textarea-field"></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <select id="edit-task-subject" class="select-field">
+                <option value="cs">Computer Science</option>
+                <option value="math">Mathematics</option>
+                <option value="bio">Biology</option>
+                <option value="phys">Physics</option>
+                <option value="lit">Literature</option>
+                <option value="other">General / Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Priority</label>
+              <select id="edit-task-priority" class="select-field">
+                <option value="high">High (Urgent)</option>
+                <option value="med">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select id="edit-task-status" class="select-field">
+                <option value="todo">To Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Due Date</label>
+              <input type="date" id="edit-task-due" class="input-field"/>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Est. (Min)</label>
+              <input type="number" id="edit-task-duration" min="5" step="5" class="input-field"/>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: var(--space-2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label class="form-label" style="margin: 0;">Subtasks / Milestones</label>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="window.app.addEditSubtaskRow()" style="font-size: 0.75rem; color: var(--accent-primary);">+ Add Subtask</button>
+            </div>
+            <div id="edit-subtasks-list"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="window.app.closeModal('modal-edit-task')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD STUDY SESSION -->
+  <div id="modal-add-session" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Schedule Study Session</h3>
+        <button class="btn btn-ghost btn-sm" onclick="window.app.closeModal('modal-add-session')">✕</button>
+      </div>
+
+      <form id="form-add-session">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Study Topic / Focus Goal</label>
+            <input type="text" name="topic" class="input-field" placeholder="e.g. Graph Algorithms: Dijkstra & BFS" required/>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <select name="subject" class="select-field">
+                <option value="cs">Computer Science</option>
+                <option value="math">Mathematics</option>
+                <option value="bio">Biology</option>
+                <option value="phys">Physics</option>
+                <option value="lit">Literature</option>
+                <option value="other">General / Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Duration (Minutes)</label>
+              <input type="number" name="durationMinutes" min="10" max="180" step="5" value="45" class="input-field" required/>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: var(--space-2);">
+            <label class="checkbox-label">
+              <input type="checkbox" name="completed"/>
+              <span class="custom-checkbox">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <span>Mark as already completed right now</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="window.app.closeModal('modal-add-session')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Schedule Session</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- JAVASCRIPT MODULE SCRIPTS -->
+  <script src="js/state.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/views/dashboard.js"></script>
+  <script src="js/views/tasks.js"></script>
+  <script src="js/views/timer.js"></script>
+  <script src="js/views/progress.js"></script>
+  <script src="js/views/notes.js"></script>
+  <script src="js/views/settings.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
